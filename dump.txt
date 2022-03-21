@@ -1,0 +1,12 @@
+digraph G {
+rankdir=UD;
+node0x7ff3adc05a40 [shape=record,label="DATA 20 " ];
+node0x7ff3adc05a40 -> node0x7ff3adc05a60[color = pink];
+node0x7ff3adc05a60 [shape=record,label="DATA 9 " ];
+node0x7ff3adc05a60 -> node0x7ff3adc05a80[color = pink];
+node0x7ff3adc05a80 [shape=record,label="DATA 5 " ];
+node0x7ff3adc05a60 -> node0x7ff3adc05aa0[color = pink];
+node0x7ff3adc05aa0 [shape=record,label="DATA 12 " ];
+node0x7ff3adc05aa0 -> node0x7ff3adc05b00[color = pink];
+node0x7ff3adc05b00 [shape=record,label="DATA 100 " ];
+}

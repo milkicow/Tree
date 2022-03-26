@@ -25,8 +25,8 @@ int main()
 
     //printf("ptr = %p, value = %d\n", TreeFind(korney, 100), TreeFind(korney, 100) -> data);
     printf("korney -> right_son = %p\n", korney -> right_son);
-
-    TreePrintPreOrder(korney);
+    int n = 4;
+    TreePrintPreOrder(korney, n);
     printf("\n");
     TreePrintInOrder(korney);
     printf("\n");

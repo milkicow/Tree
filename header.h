@@ -9,12 +9,13 @@
 #define LOX  printf("повезло повезло %d\n", __LINE__);                     
 
 typedef int DATA;
+#define elem_t "%d"
 
 void TreeCtor(struct node * nd, DATA arg);
 void TreeDtor(struct node * nd);
 node * TreeAdd(node * nd, DATA arg);
+void TreePrintPreOrder(node * nd, int n);
 void TreePrintInOrder(node * nd);
-void TreePrintPreOrder(node * nd);
 void TreePrintPostOrder(node * nd);
 void TreeFDump(node * nd);
 void TreePrint(node * nd, FILE * fp);

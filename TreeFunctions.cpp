@@ -56,26 +56,33 @@ void TreeDtor(node * nd)  //дерево и его поддерево
     }
 }
 
+void TreePrintPreOrder(node * nd, int n)
+{
+    assert(nd);
+    printf("\n%*s", n, "{");
+
+    printf(" "elem_t, nd -> data);
+    if(nd -> left_son) TreePrintPreOrder(nd -> left_son, n + 4);
+    //else n = 2;
+    if(nd -> right_son) TreePrintPreOrder(nd -> right_son, n + 4);
+    //else n = 2;
+
+    printf("%*s\n", n, "}");
+}
+
 void TreePrintInOrder(node * nd)
 {
     if (nd == NULL)
     {   
         return;
     }
-    TreePrintInOrder(nd -> left_son);
-    printf("%d  ", nd -> data);
-    TreePrintInOrder(nd -> right_son);
-}
+    //printf("%*s", n, "{");
 
-void TreePrintPreOrder(node * nd)
-{
-    if (nd == NULL)
-    {   
-        return;
-    }
-    printf("%d  ", nd -> data);
-    TreePrintPreOrder(nd -> left_son);
-    TreePrintPreOrder(nd -> right_son);
+    TreePrintInOrder(nd -> left_son);
+    printf("  "elem_t, nd -> data);
+    TreePrintInOrder(nd -> right_son);
+
+    //printf("%s", "}");
 }
 
 void TreePrintPostOrder(node * nd)
@@ -86,7 +93,7 @@ void TreePrintPostOrder(node * nd)
     }
     TreePrintPostOrder(nd -> left_son);
     TreePrintPostOrder(nd -> right_son);
-    printf("%d  ", nd -> data);
+    printf("  "elem_t, nd -> data);
 }
 
 void TreeFDump(node * nd)
@@ -114,7 +121,7 @@ void TreePrint(node * nd, FILE * fp)
         return;
     }
         
-    fprintf(fp, "node%p [shape=record,label=\"DATA %d \" ];\n", nd, nd -> data);
+    fprintf(fp, "node%p [shape=record,label=\"DATA " elem_t " \" ];\n", nd, nd -> data);
     if(nd -> left_son != NULL)
     {
         fprintf(fp, "node%p -> node%p[color = pink];\n", nd , nd -> left_son );

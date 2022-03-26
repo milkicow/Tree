@@ -17,11 +17,12 @@ void TreePrintSymmetric(node * nd);
 void TreeFDump(node * nd);
 void TreePrint(node * nd, FILE * fp);
 void TreeSegDtor(node * nd);
+node * TreeFind(node * root, int value);
 
 
 struct node
 {
-    DATA value;
+    DATA data;
     node * left_son;
     node * right_son;
 };

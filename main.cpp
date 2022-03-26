@@ -15,11 +15,12 @@ int main()
 
     TreeAdd(korney, 4);
 
-    TreeAdd(korney -> left_son, 100);
+    TreeAdd(korney, 100);
 
     //korney -> left_son = NULL;
 
-    printf("korney -> right_son = %p", korney -> right_son);
+    printf("ptr = %p, value = %d\n", TreeFind(korney, 100), TreeFind(korney, 100) -> data);
+    printf("korney -> right_son = %p\n", korney -> right_son);
 
 
     vetka = (korney -> left_son) -> left_son;

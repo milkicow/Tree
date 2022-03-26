@@ -5,7 +5,7 @@ void TreeCtor(node * nd, DATA arg)
     LOX
     nd = (node *) calloc(1, sizeof(node));
 
-    nd -> value = arg;
+    nd -> data = arg;
 
     nd -> left_son = NULL;
     nd -> right_son = NULL;
@@ -21,7 +21,7 @@ node * TreeAdd(node * nd, DATA arg)
         LOX
         nd = (node *) calloc(1, sizeof(node));
 
-        nd -> value = arg;
+        nd -> data = arg;
 
         nd -> left_son = NULL;
         nd -> right_son = NULL;
@@ -30,12 +30,12 @@ node * TreeAdd(node * nd, DATA arg)
     }
     else
     {   
-        if (arg < nd -> value)
+        if (arg < nd -> data)
         {   
             LOX
             nd -> left_son = TreeAdd(nd -> left_son, arg);
         }
-        else if (arg > nd -> value)
+        else if (arg > nd -> data)
         {   
             LOX
             nd -> right_son = TreeAdd(nd -> right_son, arg);
@@ -66,7 +66,7 @@ void TreePrintSymmetric(node * nd)
 
     LOX
     TreePrintSymmetric(nd -> left_son);
-    printf("%d  ", nd -> value);
+    printf("%d  ", nd -> data);
     TreePrintSymmetric(nd -> right_son);
 }
 
@@ -96,7 +96,7 @@ void TreePrint(node * nd, FILE * fp)
         return;
     }
         
-    fprintf(fp, "node%p [shape=record,label=\"DATA %d \" ];\n", nd, nd -> value);
+    fprintf(fp, "node%p [shape=record,label=\"DATA %d \" ];\n", nd, nd -> data);
     if(nd -> left_son != NULL)
     {
         fprintf(fp, "node%p -> node%p[color = pink];\n", nd , nd -> left_son );
@@ -107,6 +107,25 @@ void TreePrint(node * nd, FILE * fp)
         fprintf(fp, "node%p -> node%p[color = pink];\n", nd , nd -> right_son);
         TreePrint(nd -> right_son, fp);
     }
+}
+
+node * TreeFind(node * root, DATA value)
+{   
+    assert(root);
+    assert(value);
+
+    node * nd = root;
+    while(nd)
+    {
+        if(nd -> data == value) 
+            return nd;
+        if(nd -> data < value)
+            nd = nd -> right_son;
+        if(nd -> data > value)
+            nd = nd -> left_son;
+    }
+
+    return NULL;
 }
 
 void TreeSegDtor(node * nd)

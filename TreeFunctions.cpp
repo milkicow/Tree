@@ -56,20 +56,38 @@ void TreeDtor(node * nd)  //дерево и его поддерево
     }
 }
 
-void TreePrintSymmetric(node * nd)
+void TreePrintInOrder(node * nd)
 {
     if (nd == NULL)
     {   
-        LOX
         return;
     }
-
-    LOX
-    TreePrintSymmetric(nd -> left_son);
+    TreePrintInOrder(nd -> left_son);
     printf("%d  ", nd -> data);
-    TreePrintSymmetric(nd -> right_son);
+    TreePrintInOrder(nd -> right_son);
 }
 
+void TreePrintPreOrder(node * nd)
+{
+    if (nd == NULL)
+    {   
+        return;
+    }
+    printf("%d  ", nd -> data);
+    TreePrintPreOrder(nd -> left_son);
+    TreePrintPreOrder(nd -> right_son);
+}
+
+void TreePrintPostOrder(node * nd)
+{
+    if (nd == NULL)
+    {   
+        return;
+    }
+    TreePrintPostOrder(nd -> left_son);
+    TreePrintPostOrder(nd -> right_son);
+    printf("%d  ", nd -> data);
+}
 
 void TreeFDump(node * nd)
 {   

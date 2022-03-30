@@ -11,10 +11,19 @@
 typedef int DATA;
 #define elem_t "%d"
 
-void TreeCtor(struct node * nd, DATA arg);
+struct node
+{
+    DATA data;
+    node * left_son;
+    node * right_son;
+    node * parent;
+};
+
+node * TreeCtor(struct node ** nd, DATA arg);
 void TreeDtor(struct node * nd);
-node * TreeAdd(node * nd, DATA arg);
-void TreePrintPreOrder(node * nd, int n);
+node * TreeAdd(node * parent, node ** nd, DATA arg);
+node * TreeNodeAdd(node * parent, node ** nd, DATA arg);
+void TreePrintPreOrder(FILE * fp, node * nd, int n);
 void TreePrintInOrder(node * nd);
 void TreePrintPostOrder(node * nd);
 void TreeFDump(node * nd);
@@ -23,9 +32,5 @@ void TreeSegDtor(node * nd);
 node * TreeFind(node * root, int value);
 
 
-struct node
-{
-    DATA data;
-    node * left_son;
-    node * right_son;
-};
+void TreeScanf(FILE * fp, node ** nd, node * parent);
+//node * TreeFileCtor(FILE * fp, node * korney);

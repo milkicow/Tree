@@ -1,47 +1,18 @@
 #include "header.h"
 
-void TreeCtor(node * nd, DATA arg)
+node * TreeCtor(node ** nd, DATA arg)
 {
     LOX
-    nd = (node *) calloc(1, sizeof(node));
-
-    nd -> data = arg;
-
-    nd -> left_son = NULL;
-    nd -> right_son = NULL;
+    *nd = (node *) calloc(1, sizeof(node));
 
     assert(nd);
-}
 
-node * TreeAdd(node * nd, DATA arg)
-{   
-    LOX
-    if(nd == NULL)
-    {   
-        LOX
-        nd = (node *) calloc(1, sizeof(node));
+    (*nd) -> data = arg;
 
-        nd -> data = arg;
+    (*nd) -> left_son = NULL;
+    (*nd) -> right_son = NULL;
 
-        nd -> left_son = NULL;
-        nd -> right_son = NULL;
-
-        assert(nd);
-    }
-    else
-    {   
-        if (arg < nd -> data)
-        {   
-            LOX
-            nd -> left_son = TreeAdd(nd -> left_son, arg);
-        }
-        else if (arg > nd -> data)
-        {   
-            LOX
-            nd -> right_son = TreeAdd(nd -> right_son, arg);
-        }
-    }
-    return nd;
+    return *nd;
 }
 
 void TreeDtor(node * nd)  //дерево и его поддерево
@@ -56,18 +27,65 @@ void TreeDtor(node * nd)  //дерево и его поддерево
     }
 }
 
-void TreePrintPreOrder(node * nd, int n)
-{
+node * TreeAdd(node * parent, node ** nd, DATA arg)
+{   
+    LOX
+    if(*nd == NULL)
+    {   
+        LOX
+        TreeNodeAdd(parent, nd, arg);
+    }
+    else
+    {   
+        if (arg < (*nd) -> data)
+        {   
+            LOX
+            TreeAdd(*nd, &((*nd) -> left_son), arg);
+            LOX
+        }
+        else if (arg > (*nd) -> data)
+        {   
+            LOX
+            TreeAdd(*nd, &((*nd) -> right_son), arg);
+        }
+    }
+    return *nd;
+}
+
+node * TreeNodeAdd(node * parent, node ** nd, DATA arg)
+{    
+    LOX
+    *nd = (node *) calloc(1, sizeof(node));
     assert(nd);
-    printf("\n%*s", n, "{");
+    LOX
 
-    printf(" "elem_t, nd -> data);
-    if(nd -> left_son) TreePrintPreOrder(nd -> left_son, n + 4);
-    //else n = 2;
-    if(nd -> right_son) TreePrintPreOrder(nd -> right_son, n + 4);
-    //else n = 2;
+    (*nd) -> data = arg;
+    LOX
+    (*nd) -> left_son = NULL;
+    LOX
+    (*nd) -> right_son = NULL;
+    LOX
+    (*nd) -> parent = parent;
+    LOX
 
-    printf("%*s\n", n, "}");
+    return *nd;
+}
+
+void TreePrintPreOrder(FILE * fp, node * nd, int n)
+{   
+    assert(fp);
+    assert(nd);
+    fprintf(fp, "\n%*s", n, "{");
+
+    fprintf(fp, " " elem_t, nd -> data);
+
+    if(nd -> left_son) TreePrintPreOrder(fp, nd -> left_son, n + 4);
+    //else n = 2;
+    if(nd -> right_son) TreePrintPreOrder(fp, nd -> right_son, n + 4);
+    //else n = 2;
+    if(!nd -> left_son && !nd -> right_son) n = 2;
+
+    fprintf(fp, "%*s\n", n, "}");
 }
 
 void TreePrintInOrder(node * nd)
@@ -79,7 +97,7 @@ void TreePrintInOrder(node * nd)
     //printf("%*s", n, "{");
 
     TreePrintInOrder(nd -> left_son);
-    printf("  "elem_t, nd -> data);
+    printf(" "elem_t, nd -> data);
     TreePrintInOrder(nd -> right_son);
 
     //printf("%s", "}");
@@ -93,7 +111,7 @@ void TreePrintPostOrder(node * nd)
     }
     TreePrintPostOrder(nd -> left_son);
     TreePrintPostOrder(nd -> right_son);
-    printf("  "elem_t, nd -> data);
+    printf(" "elem_t, nd -> data);
 }
 
 void TreeFDump(node * nd)
@@ -159,4 +177,33 @@ void TreeSegDtor(node * nd)
 
     nd -> right_son = NULL;
     nd -> left_son = NULL;
+}
+
+void TreeScanf(FILE * fp, node ** nd, node * parent)
+{   
+    LOX
+    int data = 0;
+    char bracket[10];
+    LOX
+    fscanf(fp, "%s", bracket);
+    LOX
+    if(strcmp(bracket, "{") == 0)
+    {   
+        LOX
+        fscanf(fp, "%d", &data);
+        LOX
+        TreeNodeAdd(parent, nd, data);
+        LOX
+        TreeScanf(fp, &(*nd) -> right_son, *nd);
+        LOX
+        TreeScanf(fp, &(*nd) -> left_son, *nd);
+    }
+    else if(strcmp(bracket, "}") == 0)
+    {   
+        LOX
+        ungetc('}', fp);
+        return;
+    }
+    fscanf(fp, "%s", bracket);   
+    
 }
